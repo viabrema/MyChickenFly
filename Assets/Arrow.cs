@@ -140,39 +140,4 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision detected!");
-        // Verificar se o círculo colidiu com uma parede
-        if (collision.gameObject.tag == "Wall")
-        {
-            // Ativar o tremor da câmera
-            StartCoroutine(ShakeCamera());
-
-            // Ativar as partículas de penas na posição do círculo
-            feathers.transform.position = circle.position;
-            feathers.Play();
-        }
-    }
-
-    IEnumerator ShakeCamera()
-    {
-        Vector3 originalCameraPosition = mainCamera.transform.position;
-
-        float elapsed = 0.0f;
-
-        while (elapsed < cameraShakeDuration)
-        {
-            float x = Random.Range(-1f, 1f) * cameraShakeMagnitude;
-            float y = Random.Range(-1f, 1f) * cameraShakeMagnitude;
-
-            mainCamera.transform.position = new Vector3(originalCameraPosition.x + x, originalCameraPosition.y + y, originalCameraPosition.z);
-
-            elapsed += Time.deltaTime;
-
-            yield return null;
-        }
-
-        mainCamera.transform.position = originalCameraPosition;
-    }
 }

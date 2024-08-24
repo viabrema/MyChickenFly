@@ -8,6 +8,7 @@ public class Floor : MonoBehaviour
     public float cameraShakeDuration = 0.2f; // Duração do tremor da câmera
     public float cameraShakeMagnitude = 0.1f; // Intensidade do tremor da câmera
     public GameObject featherParticlesPrefab; // Prefab das partículas de penas
+    private Vector3 originalOffset; // Armazena o offset original
 
     void Start()
     {
@@ -17,10 +18,11 @@ public class Floor : MonoBehaviour
             mainCamera = Camera.main;
         }
 
+        // Guardar o offset original da câmera em relação ao jogador
+        originalOffset = mainCamera.transform.position - GameObject.FindGameObjectWithTag("Chicken").transform.position;
+
         // Exemplo de como encontrar o prefab de partículas de penas na cena, se necessário
         featherParticlesPrefab = GameObject.Find("Feathers");
-        // Nota: Apenas descomente a linha acima e substitua "FeatherParticlesPrefabNameHere" pelo nome correto do prefab,
-        // se quiser encontrar o prefab na cena. Certifique-se de que o prefab está na cena ou configurado via script.
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -43,7 +45,7 @@ public class Floor : MonoBehaviour
 
     IEnumerator ShakeCamera()
     {
-        Vector3 originalPosition = mainCamera.transform.position;
+        Vector3 elapsedOffset = originalOffset;
         float elapsed = 0.0f;
 
         while (elapsed < cameraShakeDuration)
@@ -51,14 +53,17 @@ public class Floor : MonoBehaviour
             float x = Random.Range(-1f, 1f) * cameraShakeMagnitude;
             float y = Random.Range(-1f, 1f) * cameraShakeMagnitude;
 
-            mainCamera.transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
+            elapsedOffset = new Vector3(originalOffset.x + x, originalOffset.y + y, originalOffset.z);
+
+            // Atualizar a posição da câmera com o novo offset
+            mainCamera.transform.position = GameObject.FindGameObjectWithTag("Chicken").transform.position + elapsedOffset;
 
             elapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        // Retornar a câmera para a posição original
-        mainCamera.transform.position = originalPosition;
+        // Retornar o offset da câmera para o valor original
+        mainCamera.transform.position = GameObject.FindGameObjectWithTag("Chicken").transform.position + originalOffset;
     }
 }
