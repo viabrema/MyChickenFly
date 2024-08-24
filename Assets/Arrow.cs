@@ -26,6 +26,7 @@ public class Arrow : MonoBehaviour
     public Camera mainCamera; // Referência à câmera principal
     public float cameraShakeDuration = 0.2f; // Duração do tremor da câmera
     public float cameraShakeMagnitude = 0.1f; // Magnitude do tremor da câmera
+    public bool cameraFallow = false;
 
     void Start()
     {
@@ -52,6 +53,12 @@ public class Arrow : MonoBehaviour
     {
         transform.position = circle.position;
         feathers.transform.position = circle.position; 
+
+        if (cameraFallow)
+        {
+            mainCamera.transform.position = new Vector3(circle.position.x, circle.position.y, mainCamera.transform.position.z);
+        }
+
         float speed = circleRb.velocity.magnitude;
 
         if (speed > flySpeedThreshold)
