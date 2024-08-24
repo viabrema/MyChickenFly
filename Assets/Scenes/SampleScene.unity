@@ -667,6 +667,9 @@ MonoBehaviour:
   animator: {fileID: 1941826567}
   flySpeedThreshold: 2
   feathers: {fileID: 1291341873}
+  mainCamera: {fileID: 519420031}
+  cameraShakeDuration: 0.2
+  cameraShakeMagnitude: 0.1
 --- !u!212 &813672536
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5766,7 +5769,7 @@ GameObject:
   - component: {fileID: 1646199048}
   m_Layer: 0
   m_Name: Chicken
-  m_TagString: Untagged
+  m_TagString: Chicken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

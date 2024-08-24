@@ -23,6 +23,9 @@ public class Arrow : MonoBehaviour
     private Vector3 originalPosition; // Posição original para o tremor
     public float flySpeedThreshold = 2f; // Velocidade mínima para ativar a animação de voo
     public ParticleSystem feathers; // Referência ao sistema de partículas das penas
+    public Camera mainCamera; // Referência à câmera principal
+    public float cameraShakeDuration = 0.2f; // Duração do tremor da câmera
+    public float cameraShakeMagnitude = 0.1f; // Magnitude do tremor da câmera
 
     void Start()
     {
@@ -37,6 +40,12 @@ public class Arrow : MonoBehaviour
 
         // Salvar a posição original da seta
         originalPosition = arrow.localPosition;
+
+        // Obter a referência à câmera principal
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
     }
 
     void Update()
@@ -122,5 +131,41 @@ public class Arrow : MonoBehaviour
             isRotating = true;
             isHoldingSpace = false;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision detected!");
+        // Verificar se o círculo colidiu com uma parede
+        if (collision.gameObject.tag == "Wall")
+        {
+            // Ativar o tremor da câmera
+            StartCoroutine(ShakeCamera());
+
+            // Ativar as partículas de penas na posição do círculo
+            feathers.transform.position = circle.position;
+            feathers.Play();
+        }
+    }
+
+    IEnumerator ShakeCamera()
+    {
+        Vector3 originalCameraPosition = mainCamera.transform.position;
+
+        float elapsed = 0.0f;
+
+        while (elapsed < cameraShakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * cameraShakeMagnitude;
+            float y = Random.Range(-1f, 1f) * cameraShakeMagnitude;
+
+            mainCamera.transform.position = new Vector3(originalCameraPosition.x + x, originalCameraPosition.y + y, originalCameraPosition.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        mainCamera.transform.position = originalCameraPosition;
     }
 }
