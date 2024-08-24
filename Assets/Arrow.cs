@@ -18,9 +18,10 @@ public class Arrow : MonoBehaviour
     private Vector3 defaultScale = new Vector3(0.35f, 0.35f, 0.35f); // Escala padrão da seta
     public float maxScale = 2f; // Escala máxima da seta
     public float shakeIntensity = 0.1f; // Intensidade do tremor quando a força está próxima do máximo
-
+    public Animator animator; // Referência ao Animator do círculo
     private Rigidbody2D circleRb; // Referência ao Rigidbody2D do círculo
     private Vector3 originalPosition; // Posição original para o tremor
+    public float flySpeedThreshold = 2f; // Velocidade mínima para ativar a animação de voo
 
     void Start()
     {
@@ -40,6 +41,17 @@ public class Arrow : MonoBehaviour
     void Update()
     {
         transform.position = circle.position;
+
+        float speed = circleRb.velocity.magnitude;
+
+        if (speed > flySpeedThreshold)
+        {
+            animator.Play("ChickenFly");
+        }
+        else
+        {
+            animator.Play("ChickenIdle");
+        }
 
         if (isRotating)
         {
