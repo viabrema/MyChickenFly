@@ -22,6 +22,7 @@ public class Arrow : MonoBehaviour
     private Rigidbody2D circleRb; // Referência ao Rigidbody2D do círculo
     private Vector3 originalPosition; // Posição original para o tremor
     public float flySpeedThreshold = 2f; // Velocidade mínima para ativar a animação de voo
+    public ParticleSystem feathers; // Referência ao sistema de partículas das penas
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class Arrow : MonoBehaviour
     void Update()
     {
         transform.position = circle.position;
-
+        feathers.transform.position = circle.position; 
         float speed = circleRb.velocity.magnitude;
 
         if (speed > flySpeedThreshold)
@@ -101,6 +102,8 @@ public class Arrow : MonoBehaviour
         // Verificar se a tecla espaço foi liberada
         if (Input.GetKeyUp(KeyCode.Space) && isHoldingSpace)
         {
+            // Posicionar e ativar o sistema de partículas das penas
+            feathers.Play();
             // Calcular a direção da seta em relação ao círculo
             Vector2 direction = (arrow.position - circle.position).normalized;
 
