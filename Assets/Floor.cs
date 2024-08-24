@@ -18,15 +18,20 @@ public class Floor : MonoBehaviour
             mainCamera = Camera.main;
         }
 
-        // Guardar o offset original da câmera em relação ao jogador
-        originalOffset = mainCamera.transform.position - GameObject.FindGameObjectWithTag("Chicken").transform.position;
 
         // Exemplo de como encontrar o prefab de partículas de penas na cena, se necessário
         featherParticlesPrefab = GameObject.Find("Feathers");
     }
 
+    void Update()
+    {
+        // Salvar o offset da câmera
+        
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
+        originalOffset = mainCamera.transform.position - GameObject.FindGameObjectWithTag("Chicken").transform.position;
         // Verificar se o objeto que colidiu é a galinha
         if (collision.gameObject.CompareTag("Chicken"))
         {

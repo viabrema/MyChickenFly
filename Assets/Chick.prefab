@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 5556178160982240548}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004, y: 0.319, z: 0}
-  m_LocalScale: {x: 2.0502295, y: 2.0502295, z: 2.0502295}
+  m_LocalPosition: {x: 0.01, y: 0.19, z: 0}
+  m_LocalScale: {x: 1.0640692, y: 1.0640692, z: 1.0640692}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3986434388257783220}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 713cfa1492a23634b9c193e6ce7dfc49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -125,7 +125,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6108987385628546756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -213,7 +213,7 @@ FixedJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.001999357, y: -0.3029997}
+  m_ConnectedAnchor: {x: -0.0020002357, y: -0.30299997}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!1 &7816627522389875801
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 4408047944702115432}
   - component: {fileID: 1939684263646090875}
   - component: {fileID: 5673869581166049939}
+  - component: {fileID: 3198889878638880912}
   m_Layer: 0
   m_Name: Chick
   m_TagString: Untagged
@@ -244,8 +245,8 @@ Transform:
   m_GameObject: {fileID: 7816627522389875801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.45, y: 3.03, z: 0}
-  m_LocalScale: {x: 0.3265, y: 0.3265, z: 0.3265}
+  m_LocalPosition: {x: 6.477, y: 3.133, z: 0}
+  m_LocalScale: {x: 0.54734457, y: 0.54734457, z: 0.54734457}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3654611257893331508}
@@ -259,7 +260,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7816627522389875801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -292,7 +293,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9811321, g: 0.8085477, b: 0.0509078, a: 1}
   m_FlipX: 0
@@ -366,3 +367,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.49999997
+--- !u!114 &3198889878638880912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816627522389875801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812ef1da71e304f44adf06b375fcada4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: 

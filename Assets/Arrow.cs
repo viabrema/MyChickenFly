@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Arrow : MonoBehaviour
 {
@@ -26,7 +27,9 @@ public class Arrow : MonoBehaviour
     public Camera mainCamera; // Referência à câmera principal
     public float cameraShakeDuration = 0.2f; // Duração do tremor da câmera
     public float cameraShakeMagnitude = 0.1f; // Magnitude do tremor da câmera
-    public bool cameraFallow = false;
+    // public bool cameraFollow = false;
+    public bool die = false;
+    bool dieFinish = false;
 
     void Start()
     {
@@ -49,26 +52,50 @@ public class Arrow : MonoBehaviour
         }
     }
 
+    void resetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator dieChicken()
+    {
+        animator.Play("ChickenDie");
+        arrow.gameObject.SetActive(false);
+        feathers.Play();
+        dieFinish = true;
+        circle.GetComponent<CircleCollider2D>().enabled = false;
+        yield return new WaitForSeconds(3f);
+        resetScene();
+
+    }
+
     void Update()
     {
-        transform.position = circle.position;
-        feathers.transform.position = circle.position; 
-
-        if (cameraFallow)
+        if (dieFinish)
         {
-            mainCamera.transform.position = new Vector3(circle.position.x, circle.position.y, mainCamera.transform.position.z);
+            return;
         }
+        transform.position = circle.position;
+        feathers.transform.position = circle.position;
 
         float speed = circleRb.velocity.magnitude;
 
-        if (speed > flySpeedThreshold)
+        if (die)
         {
-            animator.Play("ChickenFly");
+            StartCoroutine(dieChicken());
         }
         else
         {
-            animator.Play("ChickenIdle");
+            if (speed > flySpeedThreshold)
+            {
+                animator.Play("ChickenFly");
+            }
+            else
+            {
+                animator.Play("ChickenIdle");
+            }
         }
+
 
         if (isRotating)
         {
