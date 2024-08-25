@@ -31,6 +31,12 @@ public class Arrow : MonoBehaviour
     public bool die = false;
     bool dieFinish = false;
 
+    GameObject chicken01Sound; // Referência ao AudioSource da galinha parada
+    GameObject dieSound; // Referência ao AudioSource da galinha parada
+    GameObject chargeSound; // Referência ao AudioSource do som de carga
+
+    GameObject soundtrack_01; // Referência ao AudioSource da trilha sonora 01
+
     void Start()
     {
         // Obter a referência ao Rigidbody2D do círculo
@@ -44,6 +50,19 @@ public class Arrow : MonoBehaviour
 
         // Salvar a posição original da seta
         originalPosition = arrow.localPosition;
+
+        // Encontrar o AudioSource do som de carga na cena
+        chargeSound = GameObject.Find("ChargeSound");
+
+        // Encontrar o AudioSource do som de carga na cena
+        chicken01Sound = GameObject.Find("Chicken01Sound");
+
+        // Encontrar o AudioSource do som de morte na cena
+        dieSound = GameObject.Find("DieSound");
+
+        // Encontrar o AudioSource da trilha sonora 01 na cena
+        soundtrack_01 = GameObject.Find("Soundtrack_01");
+        soundtrack_01.GetComponent<AudioSource>().Play();
 
         // Obter a referência à câmera principal
         if (mainCamera == null)
@@ -82,6 +101,8 @@ public class Arrow : MonoBehaviour
 
         if (die)
         {
+            soundtrack_01.GetComponent<AudioSource>().Stop();
+            dieSound.GetComponent<AudioSource>().Play();
             StartCoroutine(dieChicken());
         }
         else
@@ -131,9 +152,19 @@ public class Arrow : MonoBehaviour
             Color arrowColor = Color.Lerp(Color.yellow, Color.red, holdTime / maxHoldTime);
             arrowSprite.color = arrowColor;
 
+            if (holdTime / maxHoldTime > 0.5f)
+            {
+                // Tocar o som de carga
+                if (!chargeSound.GetComponent<AudioSource>().isPlaying)
+                {
+                    chargeSound.GetComponent<AudioSource>().Play();
+                }
+            }
+
             // Aplicar tremor leve se a força estiver próxima do máximo
             if (holdTime / maxHoldTime > 0.8f)
             {
+
                 arrow.localPosition = originalPosition + Random.insideUnitSphere * shakeIntensity;
             }
             else
@@ -145,6 +176,10 @@ public class Arrow : MonoBehaviour
         // Verificar se a tecla espaço foi liberada
         if (Input.GetKeyUp(KeyCode.Space) && isHoldingSpace)
         {
+            // Parar o som de carga
+            chargeSound.GetComponent<AudioSource>().Stop();
+            // Tocar o som da galinha
+            chicken01Sound.GetComponent<AudioSource>().Play();
             // Posicionar e ativar o sistema de partículas das penas
             feathers.Play();
             // Calcular a direção da seta em relação ao círculo
