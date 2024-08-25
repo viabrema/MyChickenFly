@@ -1935,6 +1935,10 @@ PrefabInstance:
       propertyPath: sceneName
       value: Fase1
       objectReference: {fileID: 0}
+    - target: {fileID: 3198889878638880912, guid: adf3a6715e2a00845ba0a19b91b85f10, type: 3}
+      propertyPath: currentScene
+      value: Fase3
+      objectReference: {fileID: 0}
     - target: {fileID: 3986434388257783220, guid: adf3a6715e2a00845ba0a19b91b85f10, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.9354463

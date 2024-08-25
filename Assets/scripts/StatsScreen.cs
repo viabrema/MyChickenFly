@@ -45,6 +45,7 @@ public class StatsScreen : MonoBehaviour
     public void LoadCurrentScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(currentScene);
+        Hide();
     }
 
     public void show()

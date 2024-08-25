@@ -7,6 +7,7 @@ public class Chick : MonoBehaviour
 {
     GameObject winSound; // Referência ao AudioSource do som de vitória
     public string sceneName; // Nome da cena que você deseja carregar
+    public string currentScene; // Nome da cena atual
 
     private GameObject player; // Referência ao GameObject do jogador
 
@@ -24,6 +25,7 @@ public class Chick : MonoBehaviour
             // Iniciar a corrotina para trocar de cena após 3 segundos
             StatsScreen.instance.show();
             StatsScreen.instance.nextScene = sceneName;
+            StatsScreen.instance.currentScene = currentScene;
             player.SetActive(false);
         }
     }
