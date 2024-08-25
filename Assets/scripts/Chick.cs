@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement; // Necessário para carregar a cena
 
@@ -6,6 +7,8 @@ public class Chick : MonoBehaviour
 {
     GameObject winSound; // Referência ao AudioSource do som de vitória
     public string sceneName; // Nome da cena que você deseja carregar
+
+    private GameObject player; // Referência ao GameObject do jogador
 
     GameObject soundtrack_01; // Referência ao AudioSource da trilha sonora 01
 
@@ -19,22 +22,16 @@ public class Chick : MonoBehaviour
             // Tocar o som de vitória
             winSound.GetComponent<AudioSource>().Play();
             // Iniciar a corrotina para trocar de cena após 3 segundos
-            StartCoroutine(SwitchSceneAfterDelay(1f));
+            StatsScreen.instance.show();
+            StatsScreen.instance.nextScene = sceneName;
+            player.SetActive(false);
         }
-    }
-
-    IEnumerator SwitchSceneAfterDelay(float delay)
-    {
-        // Espera pelo tempo especificado
-        yield return new WaitForSeconds(delay);
-
-        // Carrega a cena especificada
-        SceneManager.LoadScene(sceneName);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         // Encontra o AudioSource da trilha sonora
         soundtrack_01 = GameObject.Find("Soundtrack_01");
         // Encontra o AudioSource do som de vitória na cena

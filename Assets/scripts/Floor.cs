@@ -27,7 +27,12 @@ public class Floor : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        originalOffset = mainCamera.transform.position - GameObject.FindGameObjectWithTag("Chicken").transform.position;
+        var chicken = GameObject.FindGameObjectWithTag("Chicken");
+        if (chicken)
+        {
+            originalOffset = mainCamera.transform.position - chicken.transform.position;
+        }
+
 
         // Verificar se o objeto que colidiu é a galinha
         if (collision.gameObject.CompareTag("Chicken") && !isShaking)
@@ -51,7 +56,8 @@ public class Floor : MonoBehaviour
 
         Vector3 elapsedOffset = originalOffset;
         float elapsed = 0.0f;
-
+        // Atualizar a posição da câmera com o novo offset
+        var Chicken = GameObject.FindGameObjectWithTag("Chicken");
         while (elapsed < cameraShakeDuration)
         {
             float x = Random.Range(-1f, 1f) * cameraShakeMagnitude;
@@ -59,8 +65,11 @@ public class Floor : MonoBehaviour
 
             elapsedOffset = new Vector3(originalOffset.x + x, originalOffset.y + y, originalOffset.z);
 
-            // Atualizar a posição da câmera com o novo offset
-            mainCamera.transform.position = GameObject.FindGameObjectWithTag("Chicken").transform.position + elapsedOffset;
+
+            if (Chicken != null)
+            {
+                mainCamera.transform.position = GameObject.FindGameObjectWithTag("Chicken").transform.position + elapsedOffset;
+            }
 
             elapsed += Time.deltaTime;
 
@@ -68,7 +77,10 @@ public class Floor : MonoBehaviour
         }
 
         // Retornar o offset da câmera para o valor original
-        mainCamera.transform.position = GameObject.FindGameObjectWithTag("Chicken").transform.position + originalOffset;
+        if (Chicken != null)
+        {
+            mainCamera.transform.position = Chicken.transform.position + originalOffset;
+        }
 
         yield return new WaitForSeconds(shakeCooldown); // Espera o tempo de cooldown
         isShaking = false; // Indica que o tremor terminou e pode começar outro
