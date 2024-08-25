@@ -12,7 +12,8 @@ public class Chick : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Chicken"))
-        {
+        { 
+            GameManager.instance.PauseTimer();
             // Parar a trilha sonora
             soundtrack_01.GetComponent<AudioSource>().Stop();
             // Tocar o som de vitória

@@ -39,6 +39,9 @@ public class Arrow : MonoBehaviour
 
     void Start()
     {
+        GameManager.instance.jumps = 0;
+        GameManager.instance.ResetTimer();
+        GameManager.instance.PlayTimer();
         // Obter a referência ao Rigidbody2D do círculo
         circleRb = circle.GetComponent<Rigidbody2D>();
 
@@ -101,6 +104,7 @@ public class Arrow : MonoBehaviour
 
         if (die)
         {
+            GameManager.instance.PauseTimer();
             soundtrack_01.GetComponent<AudioSource>().Stop();
             dieSound.GetComponent<AudioSource>().Play();
             StartCoroutine(dieChicken());
@@ -176,6 +180,7 @@ public class Arrow : MonoBehaviour
         // Verificar se a tecla espaço foi liberada
         if (Input.GetKeyUp(KeyCode.Space) && isHoldingSpace)
         {
+            GameManager.instance.AddJump();
             // Parar o som de carga
             chargeSound.GetComponent<AudioSource>().Stop();
             // Tocar o som da galinha
